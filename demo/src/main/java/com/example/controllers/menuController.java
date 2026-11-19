@@ -90,7 +90,7 @@ public class menuController {
     }
 
     private void loadBooks(){
-        //clearFields();
+        clearFields();
         tbBooks.setItems(bookList);
    
         
@@ -114,7 +114,7 @@ public class menuController {
 
     @FXML 
     private TableColumn<Book, Integer> colPages;
-    
+
 
     private ObservableList <Book> bookList = FXCollections.observableArrayList();
 
