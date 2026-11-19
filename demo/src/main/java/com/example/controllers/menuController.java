@@ -3,6 +3,8 @@ package com.example.controllers;
 
 import com.example.model.Book;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,15 +12,39 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class menuController {
     
 
-    @FXML private TextField tfId;
-    @FXML private TextField tfTitle;
-    @FXML private TextField tfAuthor;
-    @FXML private TextField tfYear;
-    @FXML private TextField tfPages;
+    @FXML 
+    private TextField tfId;
+    
+    @FXML 
+    private TextField tfTitle;
+    
+    @FXML 
+    private TextField tfAuthor;
+    
+    @FXML
+    private TextField tfYear;
+    
+    @FXML 
+    private TextField tfPages;
+
+    @FXML 
+    private void initialize() {
+        
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
+        colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
+        colPages.setCellValueFactory(new PropertyValueFactory<>("pages"));
+
+        tbBooks.setItems(bookList);
+        loadBooks();
+    }
+
 
     @FXML
     private void handleBtnAction(javafx.event.ActionEvent event) {  
@@ -37,8 +63,15 @@ public class menuController {
             int year = Integer.parseInt(tfYear.getText());
             int pages = Integer.parseInt(tfPages.getText());
 
-             System.out.println("Button clicked! "+id+" "+title+" "+author+" "+year+" "+pages);
-             
+            //System.out.println("Button clicked! "+id+" "+title+" "+author+" "+year+" "+pages);
+            bookList.add(new Book(id, title, author, year, pages));
+
+            /*for(Book book: bookList){
+                System.out.println(book.getId()+" "+book.getTitle()+" "+book.getAuthor()+" "+book.getYear()+" "+book.getPages());
+            }*/
+           loadBooks();
+
+
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
@@ -47,6 +80,22 @@ public class menuController {
             alert.showAndWait();
         }
     }
+
+    private void clearFields() {
+        tfId.clear();
+        tfTitle.clear();
+        tfAuthor.clear();
+        tfYear.clear();
+        tfPages.clear();
+    }
+
+    private void loadBooks(){
+        //clearFields();
+        tbBooks.setItems(bookList);
+   
+        
+    }
+
 
     @FXML 
     private TableView<Book> tbBooks;
@@ -65,6 +114,7 @@ public class menuController {
 
     @FXML 
     private TableColumn<Book, Integer> colPages;
+    
 
     private ObservableList <Book> bookList = FXCollections.observableArrayList();
 
