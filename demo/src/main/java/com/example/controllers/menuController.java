@@ -2,7 +2,7 @@ package com.example.controllers;
 
 
 import com.example.model.Book;
-
+import com.example.repository.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class menuController {
     
+    private bookRepository repository = new bookRepository();
 
     @FXML 
     private TextField tfId;
@@ -33,7 +34,7 @@ public class menuController {
     private TextField tfPages;
 
     @FXML 
-    private void initialize() {
+    private void initialize() throws Exception {
         
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -69,7 +70,7 @@ public class menuController {
             /*for(Book book: bookList){
                 System.out.println(book.getId()+" "+book.getTitle()+" "+book.getAuthor()+" "+book.getYear()+" "+book.getPages());
             }*/
-           loadBooks();
+           //loadBooks();
 
 
         } catch (NumberFormatException e) {
@@ -89,11 +90,12 @@ public class menuController {
         tfPages.clear();
     }
 
-    private void loadBooks(){
+    private void loadBooks() throws Exception{
         clearFields();
+        bookList.clear();
+        bookList.addAll(repository.getBooks());
         tbBooks.setItems(bookList);
    
-        
     }
 
 
