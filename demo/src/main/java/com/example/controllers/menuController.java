@@ -51,21 +51,32 @@ public class menuController {
     private void handleBtnAction(javafx.event.ActionEvent event) {  
 
        // System.out.println("Button clicked!");
-        insertBook();
+        try {
+            insertBook();
+        } catch (Exception e) {
+     
+            e.printStackTrace();
+        }
         
     }
 
-    private void insertBook(){
+    private void insertBook() throws Exception{
 
         try {
-            int id = Integer.parseInt(tfId.getText());
+            //int id = Integer.parseInt(tfId.getText());
             String title = tfTitle.getText();
             String author = tfAuthor.getText();
             int year = Integer.parseInt(tfYear.getText());
             int pages = Integer.parseInt(tfPages.getText());
 
             //System.out.println("Button clicked! "+id+" "+title+" "+author+" "+year+" "+pages);
-            bookList.add(new Book(id, title, author, year, pages));
+            //bookList.add(new Book(id, title, author, year, pages));
+
+            Book newBook = new Book(title, author, year, pages);
+            repository.insertBook(newBook);
+            repository.getBooks();
+            bookList.add(newBook);
+            
 
             /*for(Book book: bookList){
                 System.out.println(book.getId()+" "+book.getTitle()+" "+book.getAuthor()+" "+book.getYear()+" "+book.getPages());

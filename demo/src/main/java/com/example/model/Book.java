@@ -15,6 +15,14 @@ public class Book {
         this._pages = pages;
     }
 
+     public Book(String title, String author, int year, int pages) {
+        this._title = title;
+        this._author = author;
+        this._year = year;
+        this._pages = pages;
+    }
+
+
     public int getId() {
         return _id;
     }

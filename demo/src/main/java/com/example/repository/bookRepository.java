@@ -46,7 +46,7 @@ public class bookRepository {
             script.setInt(3, newBook.getYear());
             script.setInt(4, newBook.getPages());
 
-            script.executeQuery();
+            script.executeUpdate();
 
         } catch (Exception e) {
           
