@@ -34,6 +34,26 @@ public class bookRepository {
         return lista;
     }
 
+    public void insertBook(Book newBook){
+
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlInsert = "insert into books (title, author, year, pages) values (?,?,?,?)";
+            PreparedStatement script = conn.prepareStatement(sqlInsert);
+
+            script.setString(1, newBook.getTitle());
+            script.setString(2, newBook.getAuthor());
+            script.setInt(3, newBook.getYear());
+            script.setInt(4, newBook.getPages());
+
+            script.executeQuery();
+
+        } catch (Exception e) {
+          
+            e.printStackTrace();
+        }
+
+    }
     
     
 }
