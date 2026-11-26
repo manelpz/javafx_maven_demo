@@ -54,6 +54,47 @@ public class bookRepository {
         }
 
     }
+
+
+        public void deleteBook(Book deleteBook){
+
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlDelete = "delete from books where id=?";
+            PreparedStatement script = conn.prepareStatement(sqlDelete);
+            script.setInt(1, deleteBook.getId());
+         
+            script.executeUpdate();
+
+        } catch (Exception e) {
+          
+            e.printStackTrace();
+        }
+
+    }
+
+        public void updateBook(Book modifiedBook){
+
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlUpdate = "update books set title = ?, author = ?, year = ?, pages=? where id = ?";
+            PreparedStatement script = conn.prepareStatement(sqlUpdate);
+
+            
+            script.setString(1, modifiedBook.getTitle());
+            script.setString(2, modifiedBook.getAuthor());
+            script.setInt(3, modifiedBook.getYear());
+            script.setInt(4, modifiedBook.getPages());
+            script.setInt(5, modifiedBook.getId());
+
+            script.executeUpdate();
+
+        } catch (Exception e) {
+          
+            e.printStackTrace();
+        }
+
+    }
     
     
 }

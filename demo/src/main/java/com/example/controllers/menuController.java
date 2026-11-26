@@ -85,6 +85,16 @@ public class menuController {
             }
 
         }
+
+        if(source.toString().contains("Eliminar")){
+           try {
+                deleteBook();
+            } catch (Exception e) {
+        
+                e.printStackTrace();
+            }
+
+        }
     }
 
 
@@ -143,6 +153,29 @@ public class menuController {
 
             alert.setTitle("Insert Failed");
             alert.setContentText("Invalid type values.");
+            alert.showAndWait();
+        }
+    }
+
+        private void deleteBook() throws Exception{
+
+        try {
+            int id = Integer.parseInt(tfId.getText());
+            String title = tfTitle.getText();
+            String author = tfAuthor.getText();
+            int year = Integer.parseInt(tfYear.getText());
+            int pages = Integer.parseInt(tfPages.getText());
+
+            Book newBook = new Book(id, title, author, year, pages);
+            repository.deleteBook(newBook);
+            bookList.clear();
+            bookList.addAll(repository.getBooks());
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setTitle("delete Failed");
+            alert.setContentText("delete failed.");
             alert.showAndWait();
         }
     }
