@@ -74,8 +74,9 @@ public class menuController {
 
             Book newBook = new Book(title, author, year, pages);
             repository.insertBook(newBook);
-            repository.getBooks();
-            bookList.add(newBook);
+            bookList.clear();
+            bookList.addAll(repository.getBooks());
+            
             
 
             /*for(Book book: bookList){

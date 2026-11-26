@@ -50,6 +50,17 @@
             <configuration>
                 <mainClass>com.example.Main</mainClass>
             </configuration>
+            <executions>
+                <!-- Depuración: mvn javafx:run@debug  (espera al debugger en el puerto 5005) -->
+                <execution>
+                    <id>debug</id>
+                    <configuration>
+                        <options>
+                            <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005</option>
+                        </options>
+                    </configuration>
+                </execution>
+            </executions>
         </plugin>
     </plugins>
 </build>
