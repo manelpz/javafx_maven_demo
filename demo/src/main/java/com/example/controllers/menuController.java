@@ -43,6 +43,20 @@ public class menuController {
         colPages.setCellValueFactory(new PropertyValueFactory<>("pages"));
 
         tbBooks.setItems(bookList);
+
+
+        tbBooks.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, selectedBook) -> {
+        if (selectedBook != null) {
+                tfId.setText(String.valueOf(selectedBook.getId()));
+                tfTitle.setText(selectedBook.getTitle());
+                tfAuthor.setText(selectedBook.getAuthor());
+                tfYear.setText(String.valueOf(selectedBook.getYear()));
+                tfPages.setText(String.valueOf(selectedBook.getPages()));
+            }
+        });
+
+
+
         loadBooks();
     }
 
@@ -51,13 +65,52 @@ public class menuController {
     private void handleBtnAction(javafx.event.ActionEvent event) {  
 
        // System.out.println("Button clicked!");
-        try {
-            insertBook();
-        } catch (Exception e) {
-     
-            e.printStackTrace();
-        }
+        Object source = event.getSource();
+
+        if(source.toString() == "Insertar"){
+            try {
+                insertBook();
+            } catch (Exception e) {
         
+                e.printStackTrace();
+            }
+        }
+
+        if(source.toString().contains("Actualizar")){
+           try {
+                updateBook();
+            } catch (Exception e) {
+        
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+        private void updateBook() throws Exception{
+
+        try {
+            int id = Integer.parseInt(tfId.getText());
+            String title = tfTitle.getText();
+            String author = tfAuthor.getText();
+            int year = Integer.parseInt(tfYear.getText());
+            int pages = Integer.parseInt(tfPages.getText());
+
+
+            Book modifiedBook = new Book(id, title, author, year, pages);
+            repository.updateBook(modifiedBook);
+            bookList.clear();
+            bookList.addAll(repository.getBooks());
+
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setTitle("update Failed");
+            alert.setContentText("An error happend.");
+            alert.showAndWait();
+        }
     }
 
     private void insertBook() throws Exception{
